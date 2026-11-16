@@ -769,10 +769,14 @@ std::vector<StructureRow> collectStructureStats(const Dataset& data) {
     const std::size_t height = tree.height();
 
     std::uint64_t insertComparisons = 0;
+    std::uint64_t insertMaxComparisons = 0;
     std::map<int, int, CountingCompare> countedMap(
         CountingCompare{&insertComparisons});
     for (int key : data.insertKeys) {
+        const std::uint64_t before = insertComparisons;
         countedMap.emplace(key, key);
+        insertMaxComparisons =
+            std::max(insertMaxComparisons, insertComparisons - before);
     }
     rows.push_back({"", n, "insert", 0, "RBTree", height,
                     insertStats.rotations,
@@ -784,7 +788,8 @@ std::vector<StructureRow> collectStructureStats(const Dataset& data) {
                     insertStats.maxVisits});
     rows.push_back({"", n, "insert", 0, "std::map", height, 0, 0, 0, 0, 0,
                     0, insertComparisons,
-                    static_cast<double>(insertComparisons) / n, 0});
+                    static_cast<double>(insertComparisons) / n,
+                    insertMaxComparisons});
 
     AccumulatedStats searchStats;
     for (int key : data.queries) {
@@ -800,9 +805,13 @@ std::vector<StructureRow> collectStructureStats(const Dataset& data) {
         searchMap.emplace(key, key);
     }
     searchComparisons = 0;
+    std::uint64_t searchMaxComparisons = 0;
     for (int key : data.queries) {
+        const std::uint64_t before = searchComparisons;
         require(searchMap.find(key) != searchMap.end(),
                 "expected key missing in counted map search");
+        searchMaxComparisons =
+            std::max(searchMaxComparisons, searchComparisons - before);
     }
     rows.push_back({"", n, "find", 0, "RBTree", height, 0, 0, 0, 0, 0, 0,
                     searchStats.visits,
@@ -810,7 +819,8 @@ std::vector<StructureRow> collectStructureStats(const Dataset& data) {
                     searchStats.maxVisits});
     rows.push_back({"", n, "find", 0, "std::map", height, 0, 0, 0, 0, 0,
                     0, searchComparisons,
-                    static_cast<double>(searchComparisons) / n, 0});
+                    static_cast<double>(searchComparisons) / n,
+                    searchMaxComparisons});
 
     for (std::size_t order = 0; order < data.eraseOrders.size(); ++order) {
         InstrumentedRBTree deleteTree;
@@ -832,9 +842,13 @@ std::vector<StructureRow> collectStructureStats(const Dataset& data) {
             eraseMap.emplace(key, key);
         }
         eraseComparisons = 0;
+        std::uint64_t eraseMaxComparisons = 0;
         for (int key : data.eraseOrders[order]) {
+            const std::uint64_t before = eraseComparisons;
             require(eraseMap.erase(key) == 1,
                     "expected key missing in counted map deletion");
+            eraseMaxComparisons =
+                std::max(eraseMaxComparisons, eraseComparisons - before);
         }
         rows.push_back({"", n, "erase", static_cast<int>(order + 1),
                         "RBTree", height, deleteStats.rotations,
@@ -847,7 +861,8 @@ std::vector<StructureRow> collectStructureStats(const Dataset& data) {
         rows.push_back({"", n, "erase", static_cast<int>(order + 1),
                         "std::map", height, 0, 0, 0, 0, 0, 0,
                         eraseComparisons,
-                        static_cast<double>(eraseComparisons) / n, 0});
+                        static_cast<double>(eraseComparisons) / n,
+                        eraseMaxComparisons});
     }
     for (auto& row : rows) {
         row.workload = data.workload;
@@ -1045,7 +1060,7 @@ void writeBenchmarkCsvs(const std::string& prefix,
     }
 
     statsOut << "workload,N,operation,deletion_order,structure,"
-                "height_after_insert,total_rotations,rotations_per_operation,"
+                "rbtree_height_after_insert,total_rotations,rotations_per_operation,"
                 "max_rotations_per_operation,total_recolorings,"
                 "recolorings_per_operation,max_recolorings_per_operation,"
                 "total_node_visits_or_comparator_calls,"
