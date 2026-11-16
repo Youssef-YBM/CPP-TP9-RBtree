@@ -25,24 +25,24 @@
 \begin{abstract}
 Ce TP compare les temps d'insertion, de recherche et de suppression d'un
 arbre rouge-noir C++ avec ceux de \texttt{std::map<int,int>}. Les mesures
-sont prises sur plusieurs tailles d'entree avec des cles aleatoires.
+sont prises sur plusieurs tailles d'entrée avec des clés aléatoires.
 \end{abstract}
 
 \section{Environnement}
 \begin{itemize}
   \item Ordinateur : MSI Stealth GS66 12UGS.
-  \item Processeur : Intel Core i7-12700H, 14 coeurs (6 P-cores et 8 E-cores),
+  \item Processeur : Intel Core i7-12700H, 14 cœurs (6 P-cores et 8 E-cores),
         20 threads.
-  \item Memoire : 16 Go DDR5.
-  \item Carte graphique : NVIDIA GeForce RTX 3070 Ti, non utilisee.
+  \item Mémoire : 16 Go DDR5.
+  \item Carte graphique : NVIDIA GeForce RTX 3070 Ti, non utilisée.
   \item Compilation : MinGW-w64 / g++, C++17, optimisation \texttt{-O2}.
-        Version de g++ : \emph{a relever sur la machine de mesure}.
+        Version de g++ : \emph{à relever sur la machine de mesure}.
 \end{itemize}
-Le benchmark est mono-thread CPU. Les resultats doivent etre releves sur le
-MSI ; aucun temps provenant d'une autre machine n'est reporte ici.
+Le benchmark est mono-thread CPU. Les résultats doivent être relevés sur le
+MSI ; aucun temps provenant d'une autre machine n'est reporté ici.
 
 \section{Protocole}
-Le programme genere des cles aleatoires distinctes et emploie les memes cles
+Le programme génère des clés aléatoires distinctes et emploie les mêmes clés
 et valeurs dans les deux structures. Pour chaque taille
 $N \in \{1\,000,\ 10\,000,\ 100\,000,\ 1\,000\,000\}$, il mesure :
 \begin{itemize}
@@ -50,14 +50,14 @@ $N \in \{1\,000,\ 10\,000,\ 100\,000,\ 1\,000\,000\}$, il mesure :
   \item la recherche de toutes les cles avec \texttt{find} ;
   \item la suppression de toutes les cles avec \texttt{erase(cle)}.
 \end{itemize}
-Chaque operation est repetee cinq fois apres une chauffe. L'ordre des deux
-structures alterne et le resultat affiche est la mediane en nanosecondes par
-operation. La mesure utilise \texttt{std::chrono::steady\_clock}. Les
-invariants de l'arbre sont verifies hors chronometrage.
+Chaque opération est répétée cinq fois après une chauffe. L'ordre des deux
+structures alterne et le résultat affiché est la médiane en nanosecondes par
+opération. La mesure utilise \texttt{std::chrono::steady\_clock}. Les
+invariants de l'arbre sont vérifiés hors chronométrage.
 
-Les medianes affichees sont a reporter dans \texttt{resultats\_benchmark.csv}.
+Les médianes affichées sont à reporter dans \texttt{resultats\_benchmark.csv}.
 Les graphiques restent volontairement vides tant que ces mesures ne sont pas
-renseignees. Apres avoir rempli le CSV, remplacer
+renseignées. Après avoir rempli le CSV, remplacer
 \texttt{\textbackslash donneesMSIfalse} par
 \texttt{\textbackslash donneesMSItrue} ci-dessus, puis compiler le rapport.
 
@@ -70,7 +70,7 @@ renseignees. Apres avoir rempli le CSV, remplacer
   xmode=log,log basis x=10,
   xmin=1000,xmax=1000000,
   xtick={1000,10000,100000,1000000},
-  xlabel={$N$},ylabel={ns par operation},
+  xlabel={$N$},ylabel={ns par opération},
   title={Insertion},grid=major,
   scaled x ticks=false,
 ]
@@ -80,7 +80,7 @@ renseignees. Apres avoir rempli le CSV, remplacer
   \addplot+[mark=square*] table[x=N,y=std_mapInsertion]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
-  \node at (rel axis cs:0.5,0.5) {Medianes MSI a renseigner dans le CSV};
+  \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
 \fi
 \end{axis}
 \end{tikzpicture}
@@ -92,7 +92,7 @@ renseignees. Apres avoir rempli le CSV, remplacer
   xmode=log,log basis x=10,
   xmin=1000,xmax=1000000,
   xtick={1000,10000,100000,1000000},
-  xlabel={$N$},ylabel={ns par operation},
+  xlabel={$N$},ylabel={ns par opération},
   title={Recherche},grid=major,
   scaled x ticks=false,
 ]
@@ -102,7 +102,7 @@ renseignees. Apres avoir rempli le CSV, remplacer
   \addplot+[mark=square*] table[x=N,y=std_mapFind]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
-  \node at (rel axis cs:0.5,0.5) {Medianes MSI a renseigner dans le CSV};
+  \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
 \fi
 \end{axis}
 \end{tikzpicture}
@@ -114,7 +114,7 @@ renseignees. Apres avoir rempli le CSV, remplacer
   xmode=log,log basis x=10,
   xmin=1000,xmax=1000000,
   xtick={1000,10000,100000,1000000},
-  xlabel={$N$},ylabel={ns par operation},
+  xlabel={$N$},ylabel={ns par opération},
   title={Suppression},grid=major,
   scaled x ticks=false,
 ]
@@ -124,20 +124,20 @@ renseignees. Apres avoir rempli le CSV, remplacer
   \addplot+[mark=square*] table[x=N,y=std_mapErase]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
-  \node at (rel axis cs:0.5,0.5) {Medianes MSI a renseigner dans le CSV};
+  \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
 \fi
 \end{axis}
 \end{tikzpicture}
-\caption{Temps median par operation en fonction du nombre de cles.}
+\caption{Temps médian par opération en fonction du nombre de clés.}
 \end{figure}
 
 \section{Conclusion}
-Les deux structures equilibrent leur arbre et les operations mesurees ont une
-complexite logarithmique en moyenne. La comparaison experimentale depend des
-constantes d'implementation, du compilateur et du processeur. Aucune structure
-ne peut donc etre declaree plus rapide sur ce MSI avant d'avoir complete les
-mesures et les graphiques. Le rapport \texttt{std::map}/RBTree est superieur
-a 1 lorsque \texttt{std::map} est plus lent, et inferieur a 1 lorsqu'il est
+Les deux structures équilibrent leur arbre et les opérations mesurées ont une
+complexité logarithmique en moyenne. La comparaison expérimentale dépend des
+constantes d'implémentation, du compilateur et du processeur. Aucune structure
+ne peut donc être déclarée plus rapide sur ce MSI avant d'avoir complété les
+mesures et les graphiques. Le rapport \texttt{std::map}/RBTree est supérieur
+à 1 lorsque \texttt{std::map} est plus lent, et inférieur à 1 lorsqu'il est
 plus rapide.
 
 \end{document}
