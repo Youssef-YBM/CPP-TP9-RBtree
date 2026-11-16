@@ -147,9 +147,10 @@ directement ces valeurs.
 Sur les tailles testées, RBTree est plus rapide en recherche et en suppression.
 Pour l'insertion, RBTree est plus rapide jusqu'à $N=100\,000$; à
 $N=1\,000\,000$, \texttt{std::map} est légèrement plus rapide
-(716,79 ns contre 725,07 ns par opération). Les deux structures présentent
-une croissance du temps avec $N$, cohérente avec des opérations en
-$O(\log N)$. Ces conclusions décrivent ce protocole et cette machine; les
-constantes peuvent varier avec le compilateur et les conditions d'exécution.
+(716,79 ns contre 725,07 ns par opération). À cette taille, une recherche
+prend 545,91 ns avec RBTree contre 1\,215,63 ns avec \texttt{std::map};
+pour une suppression, les temps sont respectivement 674,23 ns et 919,71 ns.
+Ces conclusions décrivent ce protocole et cette machine; les constantes
+peuvent varier avec le compilateur et les conditions d'exécution.
 
 \end{document}
