@@ -1,0 +1,5 @@
+N,RBTreeInsertion,std_mapInsertion,RBTreeFind,std_mapFind,RBTreeErase,std_mapErase
+1000,,,,,,
+10000,,,,,,
+100000,,,,,,
+1000000,,,,,,
