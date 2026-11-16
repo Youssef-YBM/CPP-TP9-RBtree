@@ -6,7 +6,6 @@
 \usepackage[margin=2.3cm]{geometry}
 \usepackage{xcolor}
 \usepackage{pgfplots}
-\usepackage{pgfplotstable}
 \pgfplotsset{compat=1.18}
 
 \definecolor{bleuTP}{RGB}{20,70,130}
@@ -21,17 +20,17 @@
   }
 }
 
-\title{\textcolor{bleuTP}{Comparaison d'un arbre rouge-noir avec \texttt{std::map}}}
-\author{\textcolor{bleuTP}{ERRAMI Youssef\\TP de C++ avancé}}
-\date{\today}
+\title{Comparaison d'un arbre rouge-noir avec \texttt{std::map}}
+\author{ERRAMI Youssef}
+\date{TP de C++ avancé -- \today}
 
 \begin{document}
-\maketitle
+{\color{bleuTP}\maketitle}
 
 \begin{abstract}
 Ce TP compare les temps d'insertion, de recherche et de suppression d'un
-arbre rouge-noir C++ avec ceux de \texttt{std::map<int,int>}. Les mesures
-sont prises sur plusieurs tailles d'entrée avec des clés aléatoires.
+arbre rouge-noir C++ avec ceux de \texttt{std::map}. Les mesures sont prises
+sur plusieurs tailles d'entrée avec des clés aléatoires.
 \end{abstract}
 
 \section{\textcolor{bleuTP}{Environnement}}
@@ -61,9 +60,9 @@ structures alterne et le résultat affiché est la médiane en nanosecondes par
 opération. La mesure utilise \texttt{std::chrono::steady\_clock}. Les
 invariants de l'arbre sont vérifiés hors chronométrage.
 
-Les médianes mesurées sur le MSI sont enregistrées dans
-\texttt{resultats\_benchmark.csv}; les trois graphiques ci-dessous utilisent
-directement ces valeurs.
+Les médianes mesurées sur le MSI sont conservées dans
+\texttt{resultats\_benchmark.csv} et reportées directement dans les
+coordonnées des graphiques ci-dessous.
 
 \section{\textcolor{bleuTP}{Résultats}}
 \begin{figure}[ht]
@@ -78,11 +77,13 @@ directement ces valeurs.
   title={Insertion},grid=major,
   scaled x ticks=false,
 ]
-\addplot+[color=bleuTP,mark=*] table[col sep=comma,x=N,y=RBTreeInsertion]
-  {resultats_benchmark.csv};
+\addplot+[color=bleuTP,mark=*] coordinates {
+  (1000,52.90) (10000,85.69) (100000,139.50) (1000000,725.07)
+};
 \addlegendentry{RBTree}
-\addplot+[color=bleuClairTP,mark=square*]
-  table[col sep=comma,x=N,y=std_mapInsertion]{resultats_benchmark.csv};
+\addplot+[color=bleuClairTP,mark=square*] coordinates {
+  (1000,77.60) (10000,116.81) (100000,188.01) (1000000,716.79)
+};
 \addlegendentry{\texttt{std::map}}
 \end{axis}
 \end{tikzpicture}
@@ -98,11 +99,13 @@ directement ces valeurs.
   title={Recherche},grid=major,
   scaled x ticks=false,
 ]
-\addplot+[color=bleuTP,mark=*] table[col sep=comma,x=N,y=RBTreeFind]
-  {resultats_benchmark.csv};
+\addplot+[color=bleuTP,mark=*] coordinates {
+  (1000,17.90) (10000,27.22) (100000,51.51) (1000000,545.91)
+};
 \addlegendentry{RBTree}
-\addplot+[color=bleuClairTP,mark=square*]
-  table[col sep=comma,x=N,y=std_mapFind]{resultats_benchmark.csv};
+\addplot+[color=bleuClairTP,mark=square*] coordinates {
+  (1000,43.60) (10000,73.55) (100000,168.18) (1000000,1215.63)
+};
 \addlegendentry{\texttt{std::map}}
 \end{axis}
 \end{tikzpicture}
@@ -118,11 +121,13 @@ directement ces valeurs.
   title={Suppression},grid=major,
   scaled x ticks=false,
 ]
-\addplot+[color=bleuTP,mark=*] table[col sep=comma,x=N,y=RBTreeErase]
-  {resultats_benchmark.csv};
+\addplot+[color=bleuTP,mark=*] coordinates {
+  (1000,52.30) (10000,77.78) (100000,152.90) (1000000,674.23)
+};
 \addlegendentry{RBTree}
-\addplot+[color=bleuClairTP,mark=square*]
-  table[col sep=comma,x=N,y=std_mapErase]{resultats_benchmark.csv};
+\addplot+[color=bleuClairTP,mark=square*] coordinates {
+  (1000,66.20) (10000,102.99) (100000,209.24) (1000000,919.71)
+};
 \addlegendentry{\texttt{std::map}}
 \end{axis}
 \end{tikzpicture}

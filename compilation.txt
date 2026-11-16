@@ -26,10 +26,14 @@ Chaque operation est repetee 5 fois, apres une chauffe; l'ordre de mesure des
 deux structures alterne. Les temps affiches sont les medianes en ns/operation
 et le rapport est std::map/RBTree. Les recherches alimentent un checksum.
 
-Les mesures des quatre tailles ont ete executees sur le MSI et sont deja
-enregistrees dans resultats_benchmark.csv. Le rapport rapport_rbtree.tex lit
-ce fichier et affiche les trois graphes. Pour regenerer le PDF depuis ce
-dossier (avec une distribution LaTeX installee) :
+Les mesures des quatre tailles ont ete executees sur le MSI et sont
+enregistrees dans resultats_benchmark.csv. Les coordonnees des graphes sont
+integrees dans rapport_rbtree.tex pour que le document soit autonome sur
+Overleaf (le CSV n'a pas besoin d'y etre importe). Si les mesures changent,
+mettre a jour les valeurs dans le CSV et dans les coordonnees du fichier .tex.
+
+Pour compiler localement depuis ce dossier (avec une distribution LaTeX
+installee) :
 
 pdflatex -interaction=nonstopmode -halt-on-error rapport_rbtree.tex
 
