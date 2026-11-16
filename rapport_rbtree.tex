@@ -4,12 +4,25 @@
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 \usepackage[margin=2.3cm]{geometry}
+\usepackage{xcolor}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
 \pgfplotsset{compat=1.18}
 
-\title{Comparaison d'un arbre rouge-noir avec \texttt{std::map}}
-\author{ERRAMI Youssef\\TP de C++ avancé}
+\definecolor{bleuTP}{RGB}{20,70,130}
+\definecolor{bleuClairTP}{RGB}{45,135,190}
+\pgfplotsset{
+  every axis/.append style={
+    text=bleuTP,
+    axis line style={bleuTP},
+    tick label style={color=bleuTP},
+    label style={color=bleuTP},
+    title style={color=bleuTP}
+  }
+}
+
+\title{\textcolor{bleuTP}{Comparaison d'un arbre rouge-noir avec \texttt{std::map}}}
+\author{\textcolor{bleuTP}{ERRAMI Youssef\\TP de C++ avancé}}
 \date{\today}
 
 \newif\ifdonneesMSI
@@ -19,6 +32,7 @@
 \pgfplotstableread[col sep=comma]{resultats_benchmark.csv}\benchmarkdata
 
 \begin{document}
+\color{bleuTP}
 \maketitle
 
 \begin{abstract}
@@ -34,8 +48,8 @@ sont prises sur plusieurs tailles d'entrée avec des clés aléatoires.
         20 threads.
   \item Mémoire : 16 Go DDR5.
   \item Carte graphique : NVIDIA GeForce RTX 3070 Ti, non utilisée.
-  \item Compilation : MinGW-w64 / g++, C++17, optimisation \texttt{-O2}.
-        Version de g++ : \emph{à relever sur la machine de mesure}.
+  \item Système et compilateur : Windows 11, MinGW-w64 / g++ 16.2.0,
+        C++17, optimisation \texttt{-O2}.
 \end{itemize}
 Le benchmark est mono-thread CPU. Les résultats doivent être relevés sur le
 MSI ; aucun temps provenant d'une autre machine n'est reporté ici.
@@ -75,9 +89,9 @@ renseignées. Après avoir rempli le CSV, remplacer
   \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
-  \addplot+[mark=*] table[x=N,y=RBTreeInsertion]{\benchmarkdata};
+  \addplot+[bleuTP,mark=*] table[x=N,y=RBTreeInsertion]{\benchmarkdata};
   \addlegendentry{RBTree}
-  \addplot+[mark=square*] table[x=N,y=std_mapInsertion]{\benchmarkdata};
+  \addplot+[bleuClairTP,mark=square*] table[x=N,y=std_mapInsertion]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
   \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
@@ -98,9 +112,9 @@ renseignées. Après avoir rempli le CSV, remplacer
   \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
-  \addplot+[mark=*] table[x=N,y=RBTreeFind]{\benchmarkdata};
+  \addplot+[bleuTP,mark=*] table[x=N,y=RBTreeFind]{\benchmarkdata};
   \addlegendentry{RBTree}
-  \addplot+[mark=square*] table[x=N,y=std_mapFind]{\benchmarkdata};
+  \addplot+[bleuClairTP,mark=square*] table[x=N,y=std_mapFind]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
   \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
@@ -121,9 +135,9 @@ renseignées. Après avoir rempli le CSV, remplacer
   \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
-  \addplot+[mark=*] table[x=N,y=RBTreeErase]{\benchmarkdata};
+  \addplot+[bleuTP,mark=*] table[x=N,y=RBTreeErase]{\benchmarkdata};
   \addlegendentry{RBTree}
-  \addplot+[mark=square*] table[x=N,y=std_mapErase]{\benchmarkdata};
+  \addplot+[bleuClairTP,mark=square*] table[x=N,y=std_mapErase]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
   \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
