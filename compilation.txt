@@ -31,7 +31,7 @@ enregistrees dans resultats_benchmark.csv. Le rapport rapport_rbtree.tex lit
 ce fichier et affiche les trois graphes. Pour regenerer le PDF depuis ce
 dossier (avec une distribution LaTeX installee) :
 
-pdflatex rapport_rbtree.tex
+pdflatex -interaction=nonstopmode -halt-on-error rapport_rbtree.tex
 
 Pour actualiser les mesures, relancer l'option 6 pour chaque taille et
 remplacer les valeurs correspondantes dans resultats_benchmark.csv.

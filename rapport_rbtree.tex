@@ -27,7 +27,6 @@
 
 \begin{document}
 \maketitle
-\pgfplotstableread[col sep=comma]{resultats_benchmark.csv}\benchmarkdata
 
 \begin{abstract}
 Ce TP compare les temps d'insertion, de recherche et de suppression d'un
@@ -79,9 +78,11 @@ directement ces valeurs.
   title={Insertion},grid=major,
   scaled x ticks=false,
 ]
-\addplot+[color=bleuTP,mark=*] table[x=N,y=RBTreeInsertion]{\benchmarkdata};
+\addplot+[color=bleuTP,mark=*] table[col sep=comma,x=N,y=RBTreeInsertion]
+  {resultats_benchmark.csv};
 \addlegendentry{RBTree}
-\addplot+[color=bleuClairTP,mark=square*] table[x=N,y=std_mapInsertion]{\benchmarkdata};
+\addplot+[color=bleuClairTP,mark=square*]
+  table[col sep=comma,x=N,y=std_mapInsertion]{resultats_benchmark.csv};
 \addlegendentry{\texttt{std::map}}
 \end{axis}
 \end{tikzpicture}
@@ -97,9 +98,11 @@ directement ces valeurs.
   title={Recherche},grid=major,
   scaled x ticks=false,
 ]
-\addplot+[color=bleuTP,mark=*] table[x=N,y=RBTreeFind]{\benchmarkdata};
+\addplot+[color=bleuTP,mark=*] table[col sep=comma,x=N,y=RBTreeFind]
+  {resultats_benchmark.csv};
 \addlegendentry{RBTree}
-\addplot+[color=bleuClairTP,mark=square*] table[x=N,y=std_mapFind]{\benchmarkdata};
+\addplot+[color=bleuClairTP,mark=square*]
+  table[col sep=comma,x=N,y=std_mapFind]{resultats_benchmark.csv};
 \addlegendentry{\texttt{std::map}}
 \end{axis}
 \end{tikzpicture}
@@ -115,9 +118,11 @@ directement ces valeurs.
   title={Suppression},grid=major,
   scaled x ticks=false,
 ]
-\addplot+[color=bleuTP,mark=*] table[x=N,y=RBTreeErase]{\benchmarkdata};
+\addplot+[color=bleuTP,mark=*] table[col sep=comma,x=N,y=RBTreeErase]
+  {resultats_benchmark.csv};
 \addlegendentry{RBTree}
-\addplot+[color=bleuClairTP,mark=square*] table[x=N,y=std_mapErase]{\benchmarkdata};
+\addplot+[color=bleuClairTP,mark=square*]
+  table[col sep=comma,x=N,y=std_mapErase]{resultats_benchmark.csv};
 \addlegendentry{\texttt{std::map}}
 \end{axis}
 \end{tikzpicture}
