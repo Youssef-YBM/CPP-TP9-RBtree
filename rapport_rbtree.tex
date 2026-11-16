@@ -26,8 +26,7 @@
 \date{\today}
 
 \newif\ifdonneesMSI
-% Passer a \donneesMSItrue apres avoir rempli resultats_benchmark.csv.
-\donneesMSIfalse
+\donneesMSItrue
 
 \pgfplotstableread[col sep=comma]{resultats_benchmark.csv}\benchmarkdata
 
@@ -68,11 +67,9 @@ structures alterne et le résultat affiché est la médiane en nanosecondes par
 opération. La mesure utilise \texttt{std::chrono::steady\_clock}. Les
 invariants de l'arbre sont vérifiés hors chronométrage.
 
-Les médianes affichées sont à reporter dans \texttt{resultats\_benchmark.csv}.
-Les graphiques restent volontairement vides tant que ces mesures ne sont pas
-renseignées. Après avoir rempli le CSV, remplacer
-\texttt{\textbackslash donneesMSIfalse} par
-\texttt{\textbackslash donneesMSItrue} ci-dessus, puis compiler le rapport.
+Les médianes mesurées sur le MSI sont enregistrées dans
+\texttt{resultats\_benchmark.csv}; les trois graphiques ci-dessous utilisent
+directement ces valeurs.
 
 \section{Résultats}
 \begin{figure}[ht]
@@ -148,12 +145,12 @@ renseignées. Après avoir rempli le CSV, remplacer
 \end{figure}
 
 \section{Conclusion}
-Les deux structures équilibrent leur arbre et les trois opérations ont une
-complexité en $O(\log N)$. La comparaison expérimentale dépend des
-constantes d'implémentation, du compilateur et du processeur. Aucune structure
-ne peut donc être déclarée plus rapide sur ce MSI avant d'avoir complété les
-mesures et les graphiques. Le rapport \texttt{std::map}/RBTree est supérieur
-à 1 lorsque \texttt{std::map} est plus lent, et inférieur à 1 lorsqu'il est
-plus rapide.
+Sur les tailles testées, RBTree est plus rapide en recherche et en suppression.
+Pour l'insertion, RBTree est plus rapide jusqu'à $N=100\,000$; à
+$N=1\,000\,000$, \texttt{std::map} est légèrement plus rapide
+(716,79 ns contre 725,07 ns par opération). Les deux structures présentent
+une croissance du temps avec $N$, cohérente avec des opérations en
+$O(\log N)$. Ces conclusions décrivent ce protocole et cette machine; les
+constantes peuvent varier avec le compilateur et les conditions d'exécution.
 
 \end{document}
