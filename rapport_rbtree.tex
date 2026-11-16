@@ -47,7 +47,7 @@ et valeurs dans les deux structures. Pour chaque taille
 $N \in \{1\,000,\ 10\,000,\ 100\,000,\ 1\,000\,000\}$, il mesure :
 \begin{itemize}
   \item l'insertion avec \texttt{emplace} ;
-  \item la recherche de toutes les cles avec \texttt{find} ;
+  \item la recherche de toutes les clés avec \texttt{find} ;
   \item la suppression de toutes les cles avec \texttt{erase(cle)}.
 \end{itemize}
 Chaque opération est répétée cinq fois après une chauffe. L'ordre des deux
@@ -61,7 +61,7 @@ renseignées. Après avoir rempli le CSV, remplacer
 \texttt{\textbackslash donneesMSIfalse} par
 \texttt{\textbackslash donneesMSItrue} ci-dessus, puis compiler le rapport.
 
-\section{Resultats}
+\section{Résultats}
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
@@ -73,6 +73,7 @@ renseignées. Après avoir rempli le CSV, remplacer
   xlabel={$N$},ylabel={ns par opération},
   title={Insertion},grid=major,
   scaled x ticks=false,
+  \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
   \addplot+[mark=*] table[x=N,y=RBTreeInsertion]{\benchmarkdata};
@@ -95,6 +96,7 @@ renseignées. Après avoir rempli le CSV, remplacer
   xlabel={$N$},ylabel={ns par opération},
   title={Recherche},grid=major,
   scaled x ticks=false,
+  \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
   \addplot+[mark=*] table[x=N,y=RBTreeFind]{\benchmarkdata};
@@ -117,6 +119,7 @@ renseignées. Après avoir rempli le CSV, remplacer
   xlabel={$N$},ylabel={ns par opération},
   title={Suppression},grid=major,
   scaled x ticks=false,
+  \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
   \addplot+[mark=*] table[x=N,y=RBTreeErase]{\benchmarkdata};
@@ -132,8 +135,8 @@ renseignées. Après avoir rempli le CSV, remplacer
 \end{figure}
 
 \section{Conclusion}
-Les deux structures équilibrent leur arbre et les opérations mesurées ont une
-complexité logarithmique en moyenne. La comparaison expérimentale dépend des
+Les deux structures équilibrent leur arbre et les trois opérations ont une
+complexité en $O(\log N)$. La comparaison expérimentale dépend des
 constantes d'implémentation, du compilateur et du processeur. Aucune structure
 ne peut donc être déclarée plus rapide sur ce MSI avant d'avoir complété les
 mesures et les graphiques. Le rapport \texttt{std::map}/RBTree est supérieur
