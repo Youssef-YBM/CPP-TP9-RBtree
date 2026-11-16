@@ -86,9 +86,9 @@ directement ces valeurs.
   \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
-  \addplot+[bleuTP,mark=*] table[x=N,y=RBTreeInsertion]{\benchmarkdata};
+  \addplot+[color=bleuTP,mark=*] table[x=N,y=RBTreeInsertion]{\benchmarkdata};
   \addlegendentry{RBTree}
-  \addplot+[bleuClairTP,mark=square*] table[x=N,y=std_mapInsertion]{\benchmarkdata};
+  \addplot+[color=bleuClairTP,mark=square*] table[x=N,y=std_mapInsertion]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
   \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
@@ -109,9 +109,9 @@ directement ces valeurs.
   \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
-  \addplot+[bleuTP,mark=*] table[x=N,y=RBTreeFind]{\benchmarkdata};
+  \addplot+[color=bleuTP,mark=*] table[x=N,y=RBTreeFind]{\benchmarkdata};
   \addlegendentry{RBTree}
-  \addplot+[bleuClairTP,mark=square*] table[x=N,y=std_mapFind]{\benchmarkdata};
+  \addplot+[color=bleuClairTP,mark=square*] table[x=N,y=std_mapFind]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
   \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
@@ -132,9 +132,9 @@ directement ces valeurs.
   \ifdonneesMSI\else ymin=0,ymax=1,\fi
 ]
 \ifdonneesMSI
-  \addplot+[bleuTP,mark=*] table[x=N,y=RBTreeErase]{\benchmarkdata};
+  \addplot+[color=bleuTP,mark=*] table[x=N,y=RBTreeErase]{\benchmarkdata};
   \addlegendentry{RBTree}
-  \addplot+[bleuClairTP,mark=square*] table[x=N,y=std_mapErase]{\benchmarkdata};
+  \addplot+[color=bleuClairTP,mark=square*] table[x=N,y=std_mapErase]{\benchmarkdata};
   \addlegendentry{\texttt{std::map}}
 \else
   \node at (rel axis cs:0.5,0.5) {Médianes MSI à renseigner dans le CSV};
