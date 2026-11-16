@@ -412,7 +412,7 @@ Sample measure(Function&& operation, std::size_t count) {
     const auto start = Clock::now();
     const std::uint64_t checksum = operation();
     const auto finish = Clock::now();
-    observableChecksum = observableChecksum ^ checksum;
+    observableChecksum += checksum;
     const double elapsed = static_cast<double>(
         std::chrono::duration_cast<std::chrono::nanoseconds>(
             finish - start).count());
