@@ -348,6 +348,7 @@ private:
     }
 
     Node* minimum(Node* node) {
+        visit(node);
         while (node->left != &nil_) {
             node = node->left;
             visit(node);
@@ -419,7 +420,8 @@ private:
         return 1 + std::max(heightOf(node->left), heightOf(node->right));
     }
 
-    bool validateNode(Node* node, Node* expectedParent, std::size_t& counted,
+    bool validateNode(const Node* node, const Node* expectedParent,
+                      std::size_t& counted,
                       int& previous, bool& havePrevious, int& blackHeight,
                       std::string& error) const {
         if (node == &nil_) {
@@ -430,14 +432,7 @@ private:
             error = "child parent pointer is inconsistent";
             return false;
         }
-        if (havePrevious && previous >= node->key) {
-            error = "in-order keys are not strictly increasing";
-            return false;
-        }
-        previous = node->key;
-        havePrevious = true;
         ++counted;
-
         if (node->color == Color::Red &&
             (node->left->color != Color::Black ||
              node->right->color != Color::Black)) {
@@ -448,8 +443,16 @@ private:
         int leftBlackHeight = 0;
         int rightBlackHeight = 0;
         if (!validateNode(node->left, node, counted, previous, havePrevious,
-                          leftBlackHeight, error) ||
-            !validateNode(node->right, node, counted, previous, havePrevious,
+                          leftBlackHeight, error)) {
+            return false;
+        }
+        if (havePrevious && previous >= node->key) {
+            error = "in-order keys are not strictly increasing";
+            return false;
+        }
+        previous = node->key;
+        havePrevious = true;
+        if (!validateNode(node->right, node, counted, previous, havePrevious,
                           rightBlackHeight, error)) {
             return false;
         }
