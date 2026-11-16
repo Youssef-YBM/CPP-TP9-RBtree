@@ -26,6 +26,14 @@ Chaque operation est repetee 5 fois, apres une chauffe; l'ordre de mesure des
 deux structures alterne. Les temps affiches sont les medianes en ns/operation
 et le rapport est std::map/RBTree. Les recherches alimentent un checksum.
 
+Pour preparer le rapport, choisir 6 et lancer le benchmark pour chacune des
+tailles 1000, 10000, 100000 et 1000000. Reporter les six medianes affichees
+dans la ligne correspondante de resultats_benchmark.csv. Les cellules sont
+laissees vides jusqu'a la mesure sur le MSI. Dans rapport_rbtree.tex, passer
+\donneesMSIfalse a \donneesMSItrue, puis compiler depuis ce dossier :
+
+pdflatex rapport_rbtree.tex
+
 Pour lancer uniquement les tests automatiques sans ouvrir le menu :
 
 .\rbtree_benchmark.exe --test
