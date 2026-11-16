@@ -1,85 +1,36 @@
-TP9 — Arbre rouge-noir / std::map (C++17, MinGW-w64 g++)
-========================================================
+TP9 - Arbre rouge-noir et comparaison avec std::map
+==================================================
 
-Fichier source : rbtree_benchmark.cpp
-Le programme fonctionne sur un seul thread CPU ; le GPU n'est pas utilisé.
-Il n'intègre aucun résultat du rapport comme mesure locale. Les CSV produits
-contiennent les mesures de la machine sur laquelle le programme est exécuté.
-
-Commandes PowerShell
---------------------
-
-Se placer dans le dossier du TP :
+Depuis PowerShell :
 
 Set-Location 'C:\Users\youss\OneDrive\Documents\ILISI 2\2026 Cpp Avance et Virtualisation\TPs\TP9'
-
-Vérifier g++ et sa cible (la cible x86_64 indique une compilation 64 bits) :
-
 g++ --version
-g++ -dumpmachine
+g++ -std=c++17 -m64 -O2 -Wall -Wextra -Wpedantic rbtree_benchmark.cpp -o rbtree_benchmark.exe
+.\rbtree_benchmark.exe
 
-Compiler en 64 bits avec C++17, optimisation et avertissements :
+Le programme affiche un menu :
 
-g++ -std=c++17 -m64 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wshadow rbtree_benchmark.cpp -o rbtree_benchmark.exe
+1. Inserer une paire cle/valeur
+2. Rechercher une cle
+3. Supprimer une cle
+4. Afficher l'arbre en ordre croissant
+5. Valider les invariants rouge-noir
+6. Comparer les operations a std::map
+7. Lancer les tests automatiques
+0. Quitter
 
-Lancer les tests automatiques :
+Choisir 6, puis entrer N (de 1 a 2 000 000). Le programme genere N cles
+aleatoires distinctes, utilise les memes cles et valeurs pour RBTree et
+std::map, puis compare insertion, recherche de toutes les cles et suppression.
+Chaque operation est repetee 5 fois, apres une chauffe; l'ordre de mesure des
+deux structures alterne. Les temps affiches sont les medianes en ns/operation
+et le rapport est std::map/RBTree. Les recherches alimentent un checksum.
+
+Pour lancer uniquement les tests automatiques sans ouvrir le menu :
 
 .\rbtree_benchmark.exe --test
 
-Lancer un benchmark rapide (N=1 000 et 10 000, 3 répétitions chronométrées) :
-
-.\rbtree_benchmark.exe --quick --prefix rapide --label O2
-
-Lancer le protocole complet (N=1 000, 10 000, 100 000, 1 000 000 ; 5
-répétitions ; entrées triées, aléatoires et semi-triées ; deux ordres de
-suppression mélangés) :
-
-.\rbtree_benchmark.exe --full --prefix complet --label O2
-
-Expérience de recherche compilée avec -O2 (9 répétitions) :
-
-.\rbtree_benchmark.exe --search --prefix recherche_O2 --label O2
-
-Compiler et exécuter la même expérience avec -O2 -fno-if-conversion :
-
-g++ -std=c++17 -m64 -O2 -fno-if-conversion -Wall -Wextra -Wpedantic -Wconversion -Wshadow rbtree_benchmark.cpp -o rbtree_benchmark_no_if_conversion.exe
-.\rbtree_benchmark_no_if_conversion.exe --search --prefix recherche_no_if_conversion --label O2_fno_if_conversion
-
-Ne pas présumer du résultat de ces options sur le processeur : comparer les
-CSV obtenus sur la machine cible, dans des conditions répétables.
-
-Fichiers CSV générés
---------------------
-
-Pour un préfixe P (ex. « complet »), le benchmark écrit :
-
-P_raw.csv       durée totale et ns/op de chaque répétition chronométrée,
-                structure, charge, opération, ordre de suppression et checksum.
-P_medians.csv   médianes de temps total et ns/op, par structure et scénario.
-P_structure.csv rotations/recolorations totales, moyennes et maxima par
-                opération ; hauteur ; visites de nœuds RBTree ou appels du
-                comparateur std::map.
-P_ratios.csv    rapport médian map/RBTree (supérieur à 1 : map plus lent),
-                et temps médians utilisés pour le calcul.
-P_protocol.csv  version du compilateur, libellé de compilation, tailles,
-                graine fixe et paramètres du protocole.
-
-L'expérience de recherche écrit P_raw.csv, P_medians.csv et P_protocol.csv :
-elle compare sur le même arbre RBTree l'arrêt à l'égalité, la descente de
-style lower_bound et std::map::find. Utiliser des préfixes distincts pour
-conserver les résultats des deux options de compilation. Les commandes
-ci-dessus créent des préfixes distincts et ne remplacent pas leurs CSV
-respectifs à moins de relancer la même commande.
-
-Les appels du comparateur de std::map ne sont pas strictement la même métrique
-que les nœuds visités par RBTree. Les compteurs structurels sont recueillis
-dans une passe séparée des chronométrages. Les recherches alimentent un
-checksum observable pour éviter leur élimination par le compilateur.
-
-Conditions de mesure conseillées
---------------------------------
-
-Effectuer les mesures sur secteur, avec un mode d'alimentation constant, en
-fermant autant que possible les applications en arrière-plan. Exécuter le
-protocole complet sur le MSI pour obtenir ses temps : les résultats d'une
-autre machine ne doivent pas être présentés comme les siens.
+Le benchmark est mono-thread CPU. Pour des mesures comparables, travailler
+sur secteur, garder le meme mode d'alimentation et fermer les applications en
+arriere-plan. Les resultats dependent de la machine; aucun temps du rapport
+n'est reutilise.
