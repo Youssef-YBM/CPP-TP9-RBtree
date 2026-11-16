@@ -31,7 +31,6 @@
 \pgfplotstableread[col sep=comma]{resultats_benchmark.csv}\benchmarkdata
 
 \begin{document}
-\color{bleuTP}
 \maketitle
 
 \begin{abstract}
@@ -40,7 +39,7 @@ arbre rouge-noir C++ avec ceux de \texttt{std::map<int,int>}. Les mesures
 sont prises sur plusieurs tailles d'entrée avec des clés aléatoires.
 \end{abstract}
 
-\section{Environnement}
+\section{\textcolor{bleuTP}{Environnement}}
 \begin{itemize}
   \item Ordinateur : MSI Stealth GS66 12UGS.
   \item Processeur : Intel Core i7-12700H, 14 cœurs (6 P-cores et 8 E-cores),
@@ -53,7 +52,7 @@ sont prises sur plusieurs tailles d'entrée avec des clés aléatoires.
 Le benchmark est mono-thread CPU. Les résultats doivent être relevés sur le
 MSI ; aucun temps provenant d'une autre machine n'est reporté ici.
 
-\section{Protocole}
+\section{\textcolor{bleuTP}{Protocole}}
 Le programme génère des clés aléatoires distinctes et emploie les mêmes clés
 et valeurs dans les deux structures. Pour chaque taille
 $N \in \{1\,000,\ 10\,000,\ 100\,000,\ 1\,000\,000\}$, il mesure :
@@ -71,7 +70,7 @@ Les médianes mesurées sur le MSI sont enregistrées dans
 \texttt{resultats\_benchmark.csv}; les trois graphiques ci-dessous utilisent
 directement ces valeurs.
 
-\section{Résultats}
+\section{\textcolor{bleuTP}{Résultats}}
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
@@ -144,7 +143,7 @@ directement ces valeurs.
 \caption{Temps médian par opération en fonction du nombre de clés.}
 \end{figure}
 
-\section{Conclusion}
+\section{\textcolor{bleuTP}{Conclusion}}
 Sur les tailles testées, RBTree est plus rapide en recherche et en suppression.
 Pour l'insertion, RBTree est plus rapide jusqu'à $N=100\,000$; à
 $N=1\,000\,000$, \texttt{std::map} est légèrement plus rapide
